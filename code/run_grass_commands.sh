@@ -5,26 +5,26 @@ module load charliecloud
 # **********************************************************
 # List of raster files to import
 declare -A RASTERS_TO_IMPORT=(
-["dem1-id_subset.tif"]="dgm"
-["dem1-id_dx_subset.tif"]="dx"
-["dem1-id_dy_subset.tif"]="dy"
-["radolan_excess_1m_illdorf_subset.tif"]="rain"
-["mannings_n_1m_bilinear_subset.tif"]="manningsn"
+["dgm.tif"]="dgm"
+["dgm_dx.tif"]="dx"
+["dgm_dy.tif"]="dy"
+["rainfall_excess.tif"]="rain"
+["mannings_n.tif"]="manningsn"
 )
 # Parameter for r.sim.water
-NITERATIONS=10
+NITERATIONS=60
 OUTPUT_STEP=2
 DIFFUSION_COEFF=0.8
 HMAX=0.3
 HALPHA=4
 HBETA=0.5
 # Output file names
-OUTPUT_DEPTH_NAME="depth_subset_n50.tif"
-OUTPUT_ERROR_NAME="error_subset_n50.tif"
-OUTPUT_DISCHARGE_NAME="discharge_subset_n50.tif"
+OUTPUT_DEPTH_NAME="depth.tif"
+OUTPUT_ERROR_NAME="error.tif"
+OUTPUT_DISCHARGE_NAME="discharge.tif"
 # **********************************************************
 # Input directories and container path
-DIR="/dss/dsshome1/0A/di38fec/Simulation_Burkheim"
+DIR="/path/to/directory"
 INPUT_DIR="$DIR/input"
 OUTPUT_DIR="$DIR/output"
 CHARLIECLOUD_IMAGE="$DIR/charliecloud_image.sqfs"
@@ -135,7 +135,7 @@ chmod +x "$DYNAMIC_SCRIPT"
 ch-run --home -b "/dss/.:/dss/" \
 "$CHARLIECLOUD_IMAGE" -- bash -c "
 # Create GRASS Location
-grass -c $INPUT_DIR/dem1-id_subset.tif $LOCATION_PATH/$LOCATION_NAME -e
+grass -c $INPUT_DIR/dgm.tif $LOCATION_PATH/$LOCATION_NAME -e
 echo 'Location \"$LOCATION_NAME\" created.'
 # Execute commands script
 bash $DYNAMIC_SCRIPT $INPUT_DIR $LOCATION_PATH $LOCATION_NAME $MAPSET_NAME 
